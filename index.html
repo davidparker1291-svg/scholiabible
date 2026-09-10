@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Scholia Bible</title>
+<meta name="description" content="A translation of the Bible in three registers, in which every rendering records the reasoning behind it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Frank+Ruhl+Libre:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --vellum:#F6F4EE; --panel:#FFFDF8; --ink:#1C1A17; --ink-2:#5A554C; --ink-3:#8B8478;
+  --rubric:#9E2B25; --rubric-soft:#F2E5E1; --rule:#DAD4C6; --rule-2:#C3BBA8; --gold:#8A6D2F;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --vellum:#15140F; --panel:#1D1B16; --ink:#EDE8DC; --ink-2:#B0A996; --ink-3:#7E7869;
+  --rubric:#D8837C; --rubric-soft:#2E1D1B; --rule:#332F26; --rule-2:#4A4536; --gold:#C4A254;
+}}
+:root[data-theme="dark"]{
+  --vellum:#15140F; --panel:#1D1B16; --ink:#EDE8DC; --ink-2:#B0A996; --ink-3:#7E7869;
+  --rubric:#D8837C; --rubric-soft:#2E1D1B; --rule:#332F26; --rule-2:#4A4536; --gold:#C4A254;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--vellum);color:var(--ink);
+  font-family:"EB Garamond","Iowan Old Style",Palatino,Georgia,serif;
+  font-size:19px;line-height:1.58;-webkit-font-smoothing:antialiased}
+.ui{font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.heb{font-family:"Frank Ruhl Libre","SBL Hebrew","Times New Roman",serif;direction:rtl;
+  unicode-bidi:isolate;font-size:1.34em;line-height:1.85;font-weight:400}
+.grk{font-family:"EB Garamond","GFS Didot",Cardo,serif;font-size:1.1em}
+a{color:inherit}
+img{max-width:100%}
+
+/* ---------- shell: a codex leaf with a real outer margin ---------- */
+.leaf{max-width:1160px;margin:0 auto;padding-inline:24px}
+.body-col{max-width:660px}
+.spread{display:grid;grid-template-columns:minmax(0,660px) minmax(0,320px);
+  gap:0 46px;align-items:start}
+.marginal{border-left:1px solid var(--rule);padding-left:20px;position:sticky;top:34px}
+.marginal .tag{font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.19em;
+  text-transform:uppercase;color:var(--rubric);font-weight:600;margin-bottom:9px}
+.marginal p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 11px}
+.marginal p:last-child{margin:0}
+
+/* ---------- masthead ---------- */
+.top{border-bottom:1px solid var(--rule)}
+.top-in{display:flex;justify-content:space-between;align-items:baseline;
+  padding-block:17px;gap:16px;flex-wrap:wrap}
+.wordmark{font-size:20px;letter-spacing:.30em;font-weight:500;text-transform:uppercase}
+.sigil{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;
+  color:var(--ink-3);border:1px solid var(--rule-2);padding:3px 8px}
+
+/* ---------- hero ---------- */
+.hero{padding-block:76px 20px}
+.hero .kicker{font-family:"IBM Plex Sans",sans-serif;font-size:10.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--rubric);font-weight:600;margin-bottom:20px}
+.hero h1{font-size:clamp(42px,7.2vw,80px);line-height:1.02;margin:0 0 22px;font-weight:400;
+  letter-spacing:-.018em;text-wrap:balance}
+.hero h1 em{font-style:italic;color:var(--rubric)}
+.hero .lede{font-size:clamp(19px,2.3vw,24px);color:var(--ink-2);margin:0;max-width:33ch;line-height:1.44}
+
+/* ---------- rule ---------- */
+.rule{height:1px;background:var(--rule);margin-block:56px}
+.rule.tight{margin-block:38px}
+
+/* ---------- specimen ---------- */
+.eyebrow{font-family:"IBM Plex Sans",sans-serif;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:600;margin:0 0 22px}
+.ref{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.11em;
+  color:var(--rubric);margin-bottom:13px}
+.src-line{padding:15px 19px;background:var(--panel);border:1px solid var(--rule);
+  border-radius:2px;margin-bottom:26px}
+.reg{display:grid;grid-template-columns:112px 1fr;gap:16px;padding-block:13px;
+  border-top:1px solid var(--rule);align-items:baseline}
+.reg:first-of-type{border-top:0}
+.reg .lab{font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.reg .txt{font-size:20.5px;line-height:1.42}
+
+/* ---------- registers explainer ---------- */
+.defs{display:grid;gap:0}
+.def{padding-block:19px;border-top:1px solid var(--rule)}
+.def:first-child{border-top:0}
+.def h3{margin:0 0 5px;font-size:21px;font-weight:500;letter-spacing:.005em}
+.def h3 span{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);
+  letter-spacing:.1em;margin-left:9px}
+.def p{margin:0;color:var(--ink-2);font-size:17.5px;line-height:1.5}
+
+/* ---------- numbers ---------- */
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.fig{background:var(--vellum);padding:17px 16px}
+.fig .n{font-size:30px;font-weight:400;letter-spacing:-.022em;font-variant-numeric:tabular-nums;line-height:1}
+.fig .n.red{color:var(--rubric)}
+.fig .l{font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:8px;font-weight:500}
+
+/* ---------- status ---------- */
+.status{border:1px solid var(--rubric);background:var(--rubric-soft);padding:24px 27px;border-radius:2px}
+.status h3{margin:0 0 11px;font-family:"IBM Plex Sans",sans-serif;font-size:10.5px;
+  letter-spacing:.17em;text-transform:uppercase;color:var(--rubric);font-weight:600}
+.status p{margin:0 0 11px;font-size:18px;line-height:1.52}
+.status p:last-child{margin:0}
+
+h2.sec{font-size:clamp(28px,4.2vw,40px);line-height:1.1;margin:0 0 16px;font-weight:400;
+  letter-spacing:-.014em;text-wrap:balance}
+p.body{font-size:19px;line-height:1.58;color:var(--ink-2);margin:0 0 16px;max-width:62ch}
+p.body strong{color:var(--ink);font-weight:600}
+p.body em{font-style:italic}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--rule);margin-top:72px;padding-block:34px 56px;
+  font-family:"IBM Plex Sans",sans-serif;font-size:13px;color:var(--ink-3);line-height:1.62}
+footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:26px}
+footer strong{color:var(--ink-2);font-weight:600;display:block;margin-bottom:6px;
+  font-size:9.5px;letter-spacing:.15em;text-transform:uppercase}
+footer .tm{margin-top:26px;padding-top:18px;border-top:1px solid var(--rule);font-size:12px}
+
+@media (max-width:920px){
+  .spread{grid-template-columns:1fr;gap:30px 0}
+  .marginal{position:static;border-left:0;border-top:1px solid var(--rule);
+    padding-left:0;padding-top:17px}
+}
+@media (max-width:560px){
+  body{font-size:17.5px}
+  .hero{padding-block:52px 14px}
+  .reg{grid-template-columns:1fr;gap:5px}
+  .rule{margin-block:42px}
+}
+</style></head><body>
+
+<header class="top"><div class="leaf top-in">
+  <div class="wordmark">Scholia</div>
+  <div class="sigil">SCH &middot; 66 BOOKS</div>
+</div></header>
+
+<main class="leaf">
+
+  <section class="hero body-col">
+    <div class="kicker">A new translation of the Bible</div>
+    <h1>Every verse<br>shows its <em>work</em>.</h1>
+    <p class="lede">Three English registers for every verse &mdash; and beside each one, the reasoning that produced it.</p>
+  </section>
+
+  <div class="rule"></div>
+
+  <section class="spread">
+    <div>
+      <p class="eyebrow">Specimen &mdash; the first verse</p>
+      <div class="ref">GENESIS 1:1</div>
+      <div class="src-line heb">בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃</div>
+      <div class="reg"><div class="lab">Literal</div><div class="txt">In beginning created God the heavens and the earth.</div></div>
+      <div class="reg"><div class="lab">Everyday</div><div class="txt">In the beginning God created the heavens and the earth.</div></div>
+      <div class="reg"><div class="lab">Conversational</div><div class="txt">In the beginning, God created the heavens and the earth.</div></div>
+    </div>
+    <aside class="marginal">
+      <div class="tag">Recorded reasoning</div>
+      <p>בְּרֵאשִׁית is anarthrous &mdash; <em>in beginning</em>, not <em>in the beginning</em> &mdash; and the older reading takes it as a construct: <em>when God began to create</em>.</p>
+      <p>Both are defensible, and the choice decides whether verse 1 is the first act of creation or a title standing over the whole chapter.</p>
+      <p>The question is recorded against the verse. It has not been quietly settled.</p>
+    </aside>
+  </section>
+
+  <div class="rule"></div>
+
+  <section class="spread">
+    <div>
+      <h2 class="sec">Most translations hide the hard part.</h2>
+      <p class="body">Every translation of the Bible is a chain of decisions. A word carries three senses and one must be chosen. A clause can attach two ways. A pronoun's referent is genuinely unclear. Ordinarily those decisions are made carefully, by capable people &mdash; and then dissolved into the finished text, where the reader cannot see them, weigh them, or disagree.</p>
+      <p class="body"><strong>Scholia keeps them.</strong> Each rendering carries a note stating what was decided and why: which sense was taken, what the grammar permitted, where the registers diverge and on what grounds. Where the evidence genuinely does not settle the matter, the question is written down and left open rather than smoothed away.</p>
+      <p class="body">The name is the method. <em>Scholia</em> (σχόλια) are the notes scholars wrote in the margins of ancient manuscripts, explaining and defending why a reading is what it is.</p>
+    </div>
+    <aside class="marginal">
+      <div class="tag">On the name</div>
+      <p class="mono" style="font-size:13px;letter-spacing:.02em">σχόλιον, pl. σχόλια</p>
+      <p>A marginal note on a text, written by a scholar for other readers of that text.</p>
+      <p>Abbreviated <strong>SCH</strong>.</p>
+    </aside>
+  </section>
+
+  <div class="rule"></div>
+
+  <section class="body-col">
+    <h2 class="sec">Three registers, not one compromise.</h2>
+    <p class="body">A translation usually picks a single point on the line between the words of the original and the language people actually speak, and everyone else adjusts. Scholia renders every verse three times and lets the reader choose.</p>
+  </section>
+
+  <section class="defs body-col" style="margin-top:30px">
+    <div class="def"><h3>Literal <span>WORD ORDER PRESERVED</span></h3>
+      <p>Follows the shape of the Hebrew or Greek as closely as English allows. Keeps ambiguity ambiguous rather than resolving it silently.</p></div>
+    <div class="def"><h3>Everyday <span>READ ALOUD</span></h3>
+      <p>Plain modern English, formal enough for public reading, with nothing archaic left standing merely because it is familiar.</p></div>
+    <div class="def"><h3>Conversational <span>SPOKEN</span></h3>
+      <p>How one person would say it to another. Where the original is already plain, this register does not manufacture a difference.</p></div>
+  </section>
+
+  <section class="body-col" style="margin-top:26px">
+    <p class="body">Any difference between the three must be justified in the note. A register may not drift for the sake of sounding different.</p>
+  </section>
+
+  <div class="rule"></div>
+
+  <section class="body-col">
+    <h2 class="sec">Drafted from the original languages.</h2>
+    <p class="body">Not revised from an existing English Bible. Every verse was drafted against the tagged Hebrew and Greek &mdash; lemma, morphology, and lexical range in view &mdash; using the <strong>STEP Bible</strong> tagged texts, with Strong's and Brown&#8209;Driver&#8209;Briggs for lexical data.</p>
+    <p class="body"><strong>The base text is named, not blended.</strong> The New Testament follows the <strong>SBL Greek New Testament</strong>. Passages the manuscript tradition carries but the base text does not treat as original &mdash; the long ending of Mark, the woman taken in adultery, the Johannine Comma &mdash; are printed in brackets and identified, never dropped without a word and never presented as though undisputed. The Old Testament follows the <strong>Leningrad Codex</strong>, a single manuscript witness, with Ketiv/Qere carried at word level.</p>
+  </section>
+
+  <div class="rule"></div>
+
+  <section class="body-col">
+    <p class="eyebrow">First draft, complete</p>
+    <div class="figs">
+      <div class="fig"><div class="n">66</div><div class="l">books</div></div>
+      <div class="fig"><div class="n">31,219</div><div class="l">verses</div></div>
+      <div class="fig"><div class="n">93,657</div><div class="l">renderings</div></div>
+      <div class="fig"><div class="n red">3,380</div><div class="l">questions left open</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="cols">
+      <div>
+        <strong>Source texts</strong>
+        Drafted from the tagged original-language texts of <a href="https://www.STEPBible.org">STEP&nbsp;Bible</a> &mdash; the Translators Amalgamated Greek New Testament (TAGNT) and Translators Amalgamated Hebrew Old Testament (TAHOT) &mdash; used under CC&nbsp;BY&nbsp;4.0. The data was reformatted into a verse-indexed corpus and filtered to a single named base edition; those changes are ours.
+      </div>
+      <div>
+        <strong>Lexical data</strong>
+        Strong's Concordance and Brown-Driver-Briggs, both public domain. Historical comment drawn from public-domain patristic, medieval and Reformation sources.
+      </div>
+      <div>
+        <strong>Publisher</strong>
+        The Scholia Bible is a project of Phrontis Holdings LLC, Herndon, Virginia.
+      </div>
+    </div>
+    <div class="tm">
+      SCHOLIA&trade; is a trademark of Phrontis Holdings LLC. &copy; 2026 Phrontis Holdings LLC. All rights reserved.<br>
+      Scripture renderings are unpublished drafts and are not licensed for reproduction.
+    </div>
+  </footer>
+</main>
+</body></html>
