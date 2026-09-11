@@ -74,8 +74,6 @@ button{font:inherit;color:inherit}
   padding:12px 18px;border-radius:2px;text-decoration:none;border:0;cursor:pointer}
 .cta:hover{filter:brightness(1.08)}
 .cta:focus-visible,.tab:focus-visible,.why-btn:focus-visible{outline:2px solid var(--rubric);outline-offset:3px}
-.draft-chip{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--rubric);border:1px solid var(--rubric);padding:5px 9px;border-radius:2px}
 
 /* ---------- rule ---------- */
 .rule{height:1px;background:var(--rule);margin-block:56px}
@@ -100,14 +98,6 @@ button{font:inherit;color:inherit}
   text-transform:uppercase;color:var(--ink-3);font-weight:600}
 .reg .txt{font-size:20.5px;line-height:1.42;white-space:pre-line}
 
-/* decision-type labels */
-.kinds{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
-.kind{font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
-  font-weight:600;padding:4px 8px;border-radius:2px;border:1px solid currentColor;white-space:nowrap}
-.kind.open{color:var(--rubric);background:var(--rubric-soft)}
-.kind.variant{color:var(--gold)}
-.kind.interp{color:var(--ink-2)}
-.kind.plain{color:var(--ink-3)}
 
 .why-btn{display:flex;width:100%;justify-content:space-between;align-items:center;gap:12px;
   background:var(--panel);border:1px solid var(--rubric);color:var(--rubric);
@@ -117,21 +107,8 @@ button{font:inherit;color:inherit}
 .why-btn .chev{font-family:"IBM Plex Mono",monospace;font-size:13px;transition:transform .15s}
 .why-btn[aria-expanded="true"] .chev{transform:rotate(90deg)}
 .why{margin-top:18px}
-.why h4{font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.19em;text-transform:uppercase;
-  color:var(--ink-3);font-weight:600;margin:18px 0 8px}
-.why h4:first-child{margin-top:0}
-.why h4.red{color:var(--rubric)}
 .why p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 11px}
-.why .none{font-style:italic;color:var(--ink-3)}
-.why .src-note{font-family:"IBM Plex Sans",sans-serif;font-size:11.5px;line-height:1.5;color:var(--ink-3);
-  border-top:1px solid var(--rule);padding-top:12px;margin-top:16px}
 
-/* ---------- legend ---------- */
-.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:1px;
-  background:var(--rule);border:1px solid var(--rule);margin-top:26px}
-.legend > div{background:var(--vellum);padding:18px 18px 20px}
-.legend .kind{display:inline-block;margin-bottom:10px}
-.legend p{margin:0;font-size:16.5px;line-height:1.5;color:var(--ink-2)}
 
 /* ---------- registers explainer ---------- */
 .defs{display:grid;gap:0}
@@ -210,7 +187,6 @@ footer .rights{margin-top:30px;padding-top:18px;border-top:1px solid var(--rule)
     <p class="support">See the grammar, the alternatives, the textual questions and the decision behind every verse.</p>
     <div class="hero-actions">
       <a class="cta" href="#specimen">Why this wording? <span aria-hidden="true">&darr;</span></a>
-      <span class="draft-chip">First draft, complete &middot; Not yet reviewed</span>
     </div>
   </section>
 
@@ -226,23 +202,11 @@ footer .rights{margin-top:30px;padding-top:18px;border-top:1px solid var(--rule)
       <div id="s-regs"></div>
     </div>
     <aside class="marginal" aria-live="polite">
-      <div class="tag">What kind of decision</div>
-      <div class="kinds" id="s-kinds"></div>
       <button class="why-btn" id="why-btn" aria-expanded="false" aria-controls="why">
         <span>Why this wording?</span><span class="chev" aria-hidden="true">&rsaquo;</span>
       </button>
       <div class="why" id="why" hidden></div>
     </aside>
-  </section>
-
-  <section class="body-col">
-    <div class="legend">
-      <div><span class="kind plain">Plain</span><p>The source is clear and the English follows it. No question is recorded against the verse.</p></div>
-      <div><span class="kind interp">Interpretive choice</span><p>The source allows more than one English. One was chosen, and the note says which and why.</p></div>
-      <div><span class="kind variant">Textual variant</span><p>Manuscripts or editions differ here. The note names the reading followed and the one set aside.</p></div>
-      <div><span class="kind open">Open question</span><p>The evidence does not settle it. The question is written down against the verse and left for review.</p></div>
-    </div>
-    <p class="body" style="margin-top:16px;font-size:16.5px">These labels describe the <em>kind</em> of decision a reader is looking at. They are not a score of how certain anyone should be.</p>
   </section>
 
   <div class="rule"></div>
@@ -332,73 +296,53 @@ footer .rights{margin-top:30px;padding-top:18px;border-top:1px solid var(--rule)
 
 <script>
 /* Every string below is taken from the corpus record for the verse (renderings verbatim;
-   reasoning excerpted from each rendering's recorded decision and open questions). */
+   reasoning excerpted from each rendering's recorded decision). */
 const H = s => '<span class="hi" dir="rtl" lang="he">' + s + '</span>';
 const G = s => '<span class="gi" lang="grc">' + s + '</span>';
-const KIND = {
-  plain:   ['plain',   'Plain'],
-  interp:  ['interp',  'Interpretive choice'],
-  variant: ['variant', 'Textual variant'],
-  open:    ['open',    'Open question']
-};
 const S = [
   { id:'gen', tab:'Genesis 1:1', ref:'GENESIS 1:1', lang:'he',
     src:'בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃',
     regs:[['Literal','In beginning created God the heavens and the earth.'],
           ['Everyday','In the beginning God created the heavens and the earth.'],
           ['Conversational','In the beginning, God created the heavens and the earth.']],
-    kinds:['interp','open'],
     why:[ H('בְּרֵאשִׁית')+' is anarthrous &mdash; <em>in beginning</em>, not <em>in the beginning</em> &mdash; and the older reading takes it as a construct: <em>when God began to create</em>.',
           'Both are defensible, and the choice decides whether verse 1 is the first act of creation or a title standing over the whole chapter.',
-          H('אֱלֹהִים')+' is plural in form but takes a singular verb, and is rendered <em>God</em>. '+H('אֶרֶץ')+' is <em>earth</em> where the scope is cosmic, as here, and <em>land</em> where it is territorial; the same noun does both jobs, and no register may blur them.' ],
-    open:[ 'Whether verse 1 is an independent clause or a temporal one (<em>When God began to create&hellip;</em>). That decides whether Genesis opens with creation from nothing or with God ordering a chaos already there. The question is recorded against the verse. It has not been quietly settled.' ] },
+          H('אֱלֹהִים')+' is plural in form but takes a singular verb, and is rendered <em>God</em>. '+H('אֶרֶץ')+' is <em>earth</em> where the scope is cosmic, as here, and <em>land</em> where it is territorial; the same noun does both jobs, and no register may blur them.' ] },
 
   { id:'jhn', tab:'John 1:1', ref:'JOHN 1:1', lang:'grc',
     src:'Ἐν ἀρχῇ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος.',
     regs:[['Literal','In beginning was the Word, and the Word was toward God, and God was the Word.'],
           ['Everyday','In the beginning was the Word, and the Word was with God, and the Word was God.'],
           ['Conversational','In the beginning was the Word, and the Word was with God, and the Word was God.']],
-    kinds:['interp','open'],
     why:[ G('πρὸς τὸν θεόν')+' is <em>toward</em> &mdash; a word of orientation rather than mere company. The literal register keeps it; the others read <em>with</em>.',
           'In the third clause '+G('θεός')+' has no article and stands before the verb, which marks a predicate of category, not indefiniteness. The rendering follows the mainstream grammatical judgement. The literal keeps the Greek order: <em>God was the Word</em>.',
-          'Conversational matches everyday here. The cadence is already the point, and relaxing it would cost more than it gained.' ],
-    open:[ G('λόγος')+' has no one-word English equivalent: spoken word, reason, account, the creative speech of Genesis 1. <em>Word</em> is the traditional English and carries only the first. Whether to keep it is a live question.',
-           'The missing article on '+G('θεός')+' has been read as <em>a god</em>. Because this is among the most contested renderings in the New Testament, the reasoning is to be stated in full rather than assumed.' ] },
+          'Conversational matches everyday here. The cadence is already the point, and relaxing it would cost more than it gained.' ] },
 
   { id:'ps23', tab:'Psalm 23:1', ref:'PSALM 23:1', lang:'he',
     src:'יְהוָ֥ה רֹ֝עִ֗י לֹ֣א אֶחְסָֽר׃',
     regs:[['Literal','YHWH is my shepherd;\nI do not lack.'],
           ['Everyday','The LORD is my shepherd;\nI lack nothing.'],
           ['Conversational','The LORD is my shepherd;\nI lack nothing.']],
-    kinds:['interp'],
     why:[ H('לֹא אֶחְסָר')+' is <em>I do not lack</em> &mdash; an intransitive verb with no object.',
           '<em>I shall not want</em> is the King James wording and is set aside: <em>want</em> in that sense is no longer living English, and is heard as desire rather than lack.',
           'The literal register keeps the verb bare, exactly as the Hebrew leaves it. The readable registers supply <em>nothing</em> &mdash; the minimum English needs &mdash; and the addition is flagged.',
-          H('רֹעֶה')+', <em>shepherd</em>, shares its consonants with the disputed verb at Psalm 2:9, which the Septuagint read as <em>you shall shepherd them</em>. The connection is noted; it does not change the ruling there.' ],
-    open:[] },
+          H('רֹעֶה')+', <em>shepherd</em>, shares its consonants with the disputed verb at Psalm 2:9, which the Septuagint read as <em>you shall shepherd them</em>. The connection is noted; it does not change the ruling there.' ] },
 
   { id:'ps100', tab:'Psalm 100:3', ref:'PSALM 100:3', lang:'he',
     src:'דְּע֗וּ כִּֽי־יְהוָה֮ ה֤וּא אֱלֹ֫הִ֥ים הֽוּא־עָ֭שָׂנוּ וְל֣וֹ אֲנַ֑חְנוּ עַ֝מּ֗וֹ וְצֹ֣אן מַרְעִיתֽוֹ׃',
     regs:[['Literal','Know that YHWH — he is God.\nHe made us, and we are his,\nhis people and the flock of his pasture.'],
           ['Everyday','Know that the LORD — he is God.\nHe made us, and we are his,\nhis people and the flock of his pasture.'],
           ['Conversational','Know that the LORD — he is God.\nHe made us, and we are his,\nhis people, the flock of his pasture.']],
-    kinds:['variant','open'],
     why:[ 'The consonants written in the text are '+H('וְלֹא')+', <em>and not</em>: <em>he made us, and not we ourselves</em> &mdash; the reading the King James follows. The reading handed down for reading aloud, the <em>qere</em>, is '+H('וְלוֹ')+', <em>and to him</em>: <em>he made us, and we are his</em>.',
           'The edition follows the qere in all three registers. But the two differ in sense &mdash; one denies that we made ourselves, the other says we belong to him &mdash; so the written form is recorded here rather than dropped. A qere followed silently is a decision made by stealth.',
-          '<em>The flock of his pasture</em> inverts Psalm 95:7&rsquo;s <em>the people of his pasture and the flock of his hand</em>. The inversion is rendered, not levelled.' ],
-    open:[ 'Ketiv against qere, with a real difference in sense. The qere is followed by policy; a scholar must sign.' ] }
+          '<em>The flock of his pasture</em> inverts Psalm 95:7&rsquo;s <em>the people of his pasture and the flock of his hand</em>. The inversion is rendered, not levelled.' ] }
 ];
 
 const $ = id => document.getElementById(id);
 let cur = 0, open = false;
 
 function renderWhy(s){
-  let h = '<h4>Recorded reasoning</h4>' + s.why.map(p => '<p>'+p+'</p>').join('');
-  h += '<h4 class="red">Left open</h4>';
-  h += s.open.length ? s.open.map(p => '<p>'+p+'</p>').join('')
-                     : '<p class="none">No question is left open on this verse.</p>';
-  h += '<p class="src-note">Draft &mdash; not yet reviewed. Excerpted from the reasoning recorded against this verse.</p>';
-  return h;
+  return s.why.map(p => '<p>'+p+'</p>').join('');
 }
 
 function show(i, focus){
@@ -415,7 +359,6 @@ function show(i, focus){
   $('s-regs').innerHTML = s.regs.map(r =>
     '<div class="reg"><div class="lab">'+r[0]+'</div><div class="txt"></div></div>').join('');
   $('s-regs').querySelectorAll('.txt').forEach((el,j) => el.textContent = s.regs[j][1]);
-  $('s-kinds').innerHTML = s.kinds.map(k => '<span class="kind '+KIND[k][0]+'">'+KIND[k][1]+'</span>').join('');
   $('why').innerHTML = renderWhy(s);
   if (focus) document.querySelectorAll('.tab')[i].focus();
 }
