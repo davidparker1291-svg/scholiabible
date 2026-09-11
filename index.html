@@ -133,7 +133,7 @@ button{font:inherit;color:inherit}
 .lrow.later .st,.lrow.later .ct{color:var(--ink-3)}
 
 /* ---------- numbers ---------- */
-.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));
+.figs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
   gap:1px;background:var(--rule);border:1px solid var(--rule)}
 .fig{background:var(--vellum);padding:17px 16px}
 .fig .n{font-size:30px;font-weight:400;letter-spacing:-.022em;font-variant-numeric:tabular-nums;line-height:1}
@@ -161,6 +161,7 @@ footer .rights{margin-top:30px;padding-top:18px;border-top:1px solid var(--rule)
   .marginal{position:static;border-left:0;border-top:1px solid var(--rule);
     padding-left:0;padding-top:17px}
 }
+@media (max-width:600px){.figs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){
   body{font-size:17.5px}
   .hero{padding-block:52px 14px}
@@ -251,13 +252,13 @@ footer .rights{margin-top:30px;padding-top:18px;border-top:1px solid var(--rule)
   <!-- ================= STATUS ================= -->
   <section class="body-col">
     <p class="eyebrow">Where every verse stands</p>
-    <h2 class="sec">First draft, complete. Not yet reviewed.</h2>
-    <p class="body">A complete draft is not a finished Bible. Every rendering passes through three states, and none moves past the first without a named reviewer.</p>
+    <h2 class="sec">First draft, complete. Now in review.</h2>
+    <p class="body">A complete draft is not a finished Bible. Every rendering passes through three states, and none is marked reviewed until a named reviewer signs it.</p>
     <div class="ledger">
-      <div class="lrow now"><div class="st">Draft</div><div class="ct">93,657</div>
-        <div class="ds">Rendered in its register, with the reasoning recorded. Not yet examined by a reviewer.</div></div>
+      <div class="lrow now"><div class="st">In review</div><div class="ct">93,657</div>
+        <div class="ds">Drafted in its register with the reasoning recorded, and now in review.</div></div>
       <div class="lrow later"><div class="st">Reviewed</div><div class="ct">0</div>
-        <div class="ds">Examined and signed by a named reviewer, who stands behind the rendering.</div></div>
+        <div class="ds">Signed by a named reviewer, who stands behind the rendering.</div></div>
       <div class="lrow later"><div class="st">Stable</div><div class="ct">0</div>
         <div class="ds">Reviewed, with no question left open on the verse. Fixed for print.</div></div>
     </div>
@@ -300,42 +301,37 @@ footer .rights{margin-top:30px;padding-top:18px;border-top:1px solid var(--rule)
 const H = s => '<span class="hi" dir="rtl" lang="he">' + s + '</span>';
 const G = s => '<span class="gi" lang="grc">' + s + '</span>';
 const S = [
-  { id:'gen', tab:'Genesis 1:1', ref:'GENESIS 1:1', lang:'he',
-    src:'בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃',
-    regs:[['Literal','In beginning created God the heavens and the earth.'],
-          ['Everyday','In the beginning God created the heavens and the earth.'],
-          ['Conversational','In the beginning, God created the heavens and the earth.']],
-    why:[ H('בְּרֵאשִׁית')+' is anarthrous &mdash; <em>in beginning</em>, not <em>in the beginning</em> &mdash; and the older reading takes it as a construct: <em>when God began to create</em>.',
-          'Both are defensible, and the choice decides whether verse 1 is the first act of creation or a title standing over the whole chapter.',
-          H('אֱלֹהִים')+' is plural in form but takes a singular verb, and is rendered <em>God</em>. '+H('אֶרֶץ')+' is <em>earth</em> where the scope is cosmic, as here, and <em>land</em> where it is territorial; the same noun does both jobs, and no register may blur them.' ] },
-
-  { id:'jhn', tab:'John 1:1', ref:'JOHN 1:1', lang:'grc',
-    src:'Ἐν ἀρχῇ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος.',
-    regs:[['Literal','In beginning was the Word, and the Word was toward God, and God was the Word.'],
-          ['Everyday','In the beginning was the Word, and the Word was with God, and the Word was God.'],
-          ['Conversational','In the beginning was the Word, and the Word was with God, and the Word was God.']],
-    why:[ G('πρὸς τὸν θεόν')+' is <em>toward</em> &mdash; a word of orientation rather than mere company. The literal register keeps it; the others read <em>with</em>.',
-          'In the third clause '+G('θεός')+' has no article and stands before the verb, which marks a predicate of category, not indefiniteness. The rendering follows the mainstream grammatical judgement. The literal keeps the Greek order: <em>God was the Word</em>.',
-          'Conversational matches everyday here. The cadence is already the point, and relaxing it would cost more than it gained.' ] },
-
-  { id:'ps23', tab:'Psalm 23:1', ref:'PSALM 23:1', lang:'he',
-    src:'יְהוָ֥ה רֹ֝עִ֗י לֹ֣א אֶחְסָֽר׃',
-    regs:[['Literal','YHWH is my shepherd;\nI do not lack.'],
-          ['Everyday','The LORD is my shepherd;\nI lack nothing.'],
-          ['Conversational','The LORD is my shepherd;\nI lack nothing.']],
-    why:[ H('לֹא אֶחְסָר')+' is <em>I do not lack</em> &mdash; an intransitive verb with no object.',
-          '<em>I shall not want</em> is the King James wording and is set aside: <em>want</em> in that sense is no longer living English, and is heard as desire rather than lack.',
-          'The literal register keeps the verb bare, exactly as the Hebrew leaves it. The readable registers supply <em>nothing</em> &mdash; the minimum English needs &mdash; and the addition is flagged.',
-          H('רֹעֶה')+', <em>shepherd</em>, shares its consonants with the disputed verb at Psalm 2:9, which the Septuagint read as <em>you shall shepherd them</em>. The connection is noted; it does not change the ruling there.' ] },
-
-  { id:'ps100', tab:'Psalm 100:3', ref:'PSALM 100:3', lang:'he',
-    src:'דְּע֗וּ כִּֽי־יְהוָה֮ ה֤וּא אֱלֹ֫הִ֥ים הֽוּא־עָ֭שָׂנוּ וְל֣וֹ אֲנַ֑חְנוּ עַ֝מּ֗וֹ וְצֹ֣אן מַרְעִיתֽוֹ׃',
-    regs:[['Literal','Know that YHWH — he is God.\nHe made us, and we are his,\nhis people and the flock of his pasture.'],
-          ['Everyday','Know that the LORD — he is God.\nHe made us, and we are his,\nhis people and the flock of his pasture.'],
-          ['Conversational','Know that the LORD — he is God.\nHe made us, and we are his,\nhis people, the flock of his pasture.']],
-    why:[ 'The consonants written in the text are '+H('וְלֹא')+', <em>and not</em>: <em>he made us, and not we ourselves</em> &mdash; the reading the King James follows. The reading handed down for reading aloud, the <em>qere</em>, is '+H('וְלוֹ')+', <em>and to him</em>: <em>he made us, and we are his</em>.',
-          'The edition follows the qere in all three registers. But the two differ in sense &mdash; one denies that we made ourselves, the other says we belong to him &mdash; so the written form is recorded here rather than dropped. A qere followed silently is a decision made by stealth.',
-          '<em>The flock of his pasture</em> inverts Psalm 95:7&rsquo;s <em>the people of his pasture and the flock of his hand</em>. The inversion is rendered, not levelled.' ] }
+  { id:'luk', tab:'Luke 6:31', ref:'LUKE 6:31', lang:'grc',
+    src:"καὶ καθὼς θέλετε ἵνα ποιῶσιν ὑμῖν οἱ ἄνθρωποι, ποιεῖτε αὐτοῖς ὁμοίως.",
+    regs:[["Literal","And just as you wish that humans should do to you, do to them likewise."],
+          ["Everyday","And just as you want people to treat you, treat them the same way."],
+          ["Conversational","And treat people the way you want them to treat you."]],
+    why:[ "Conversational moves the subordinate clause behind the main one. That is the spoken order, and it puts the command first.",
+          "Luke places this line in the middle of the enemy-love section, where it is the ground of the argument; Matthew places it at the end of a different discourse. Position is content here." ] },
+  { id:'pro', tab:'Proverbs 3:6', ref:'PROVERBS 3:6', lang:'he',
+    src:"בְּכָל־דְּרָכֶ֥יךָ דָעֵ֑הוּ וְ֝ה֗וּא יְיַשֵּׁ֥ר אֹֽרְחֹתֶֽיךָ׃",
+    regs:[["Literal","In all your ways know him,\nand he will make your paths straight."],
+          ["Everyday","In all your ways acknowledge him,\nand he will make your paths straight."],
+          ["Conversational","Know him in everything you do,\nand he'll make your paths straight."]],
+    why:[ H('דָּעֵהוּ')+' is the verb of '+H('דַּעַת')+', <em>knowledge</em> &mdash; literally <em>know him</em>. Literal keeps <em>know</em>: it is what the Hebrew says, and it keeps the link to the book&rsquo;s own key word.',
+          "Everyday uses <em>acknowledge</em>, the sense the command carries here &mdash; but it is a narrowing, and the narrowing is named.",
+          H('יְיַשֵּׁר')+' comes from '+H('יָשָׁר')+', <em>upright</em>. The verb makes a road straight, the adjective makes a person straight, and Hebrew uses one root for both.' ] },
+  { id:'mat', tab:'Matthew 11:28', ref:'MATTHEW 11:28', lang:'grc',
+    src:"Δεῦτε πρός με πάντες οἱ κοπιῶντες καὶ πεφορτισμένοι, κἀγὼ ἀναπαύσω ὑμᾶς.",
+    regs:[["Literal","Come to me all the ones toiling and having been burdened, and I will rest you."],
+          ["Everyday","Come to me, all who are labouring and loaded down, and I will give you rest."],
+          ["Conversational","Come to me, all of you who are labouring and loaded down, and I'll give you rest."]],
+    why:[ G('ἀναπαύσω')+' is transitive &mdash; literally <em>I will rest you</em>. Everyday&rsquo;s <em>give you rest</em> is a concession English forces.',
+          G('πεφορτισμένοι')+' is a perfect passive: loaded down <em>by someone else</em>. Matthew uses the same noun of the teachers&rsquo; burdens at 23:4, so no register relaxes it to <em>tired</em>.',
+          "Conversational says <em>all of you who</em>, which is how an invitation is spoken to a crowd." ] },
+  { id:'mic', tab:'Micah 6:8', ref:'MICAH 6:8', lang:'he',
+    src:"הִגִּ֥יד לְךָ֛ אָדָ֖ם מַה־טּ֑וֹב וּמָֽה־יְהוָ֞ה דּוֹרֵ֣שׁ מִמְּךָ֗ כִּ֣י אִם־עֲשׂ֤וֹת מִשְׁפָּט֙ וְאַ֣הֲבַת חֶ֔סֶד וְהַצְנֵ֥עַ לֶ֖כֶת עִם־אֱלֹהֶֽיךָ׃",
+    regs:[["Literal","He has told you, O human, what is good,\nand what YHWH is requiring from you:\nnothing but to do justice,\nand to love steadfast love,\nand to walk modestly with your God."],
+          ["Everyday","He has told you, O mortal, what is good,\nand what the LORD is requiring of you:\nnothing but to do justice,\nand to love steadfast love,\nand to walk humbly with your God."],
+          ["Conversational","He has told you, mortal, what is good,\nand what the LORD is asking of you:\nonly this — to do justice,\nto love steadfast love,\nand to walk humbly with your God."]],
+    why:[ H('הַצְנֵעַ')+' comes from a rare root, found elsewhere only at Proverbs 11:2, meaning something like <em>be modest, be circumspect</em>. Literal keeps <em>modestly</em>; the readable registers say <em>humbly</em> &mdash; a construal, not a certainty, and recorded as one.',
+          H('מִשְׁפָּט')+' here is justice as something done &mdash; not <em>an ordinance</em> or <em>a ruling</em>, which the same noun carries elsewhere. <em>To do what is just</em> and <em>to keep the ordinances</em> are different demands.',
+          H('אָדָם')+' is taken as the one addressed: <em>O human</em>, <em>O mortal</em>. It may instead be the subject &mdash; <em>a human has told you what is good</em> &mdash; which changes who is speaking. The alternative is recorded.' ] }
 ];
 
 const $ = id => document.getElementById(id);
