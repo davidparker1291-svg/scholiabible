@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Scholia Bible</title>
-<meta name="description" content="A translation of the Bible in three registers, in which every rendering records the reasoning behind it.">
+<meta name="description" content="The transparent Bible translation. Three ways to read, one source text, and the reasoning behind every verse.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Frank+Ruhl+Libre:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -21,17 +21,19 @@
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;background:var(--vellum);color:var(--ink);
   font-family:"EB Garamond","Iowan Old Style",Palatino,Georgia,serif;
   font-size:19px;line-height:1.58;-webkit-font-smoothing:antialiased}
-.ui{font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif}
 .mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
 .heb{font-family:"Frank Ruhl Libre","SBL Hebrew","Times New Roman",serif;direction:rtl;
   unicode-bidi:isolate;font-size:1.34em;line-height:1.85;font-weight:400}
-.grk{font-family:"EB Garamond","GFS Didot",Cardo,serif;font-size:1.1em}
+.grk{font-family:"EB Garamond","GFS Didot",Cardo,serif;font-size:1.12em;line-height:1.6}
+.hi{font-family:"Frank Ruhl Libre","SBL Hebrew","Times New Roman",serif;unicode-bidi:isolate;font-size:1.12em}
+.gi{font-family:"EB Garamond","GFS Didot",Cardo,serif}
 a{color:inherit}
 img{max-width:100%}
+button{font:inherit;color:inherit}
 
 /* ---------- shell: a codex leaf with a real outer margin ---------- */
 .leaf{max-width:1160px;margin:0 auto;padding-inline:24px}
@@ -48,7 +50,8 @@ img{max-width:100%}
 .top{border-bottom:1px solid var(--rule)}
 .top-in{display:flex;justify-content:space-between;align-items:baseline;
   padding-block:17px;gap:16px;flex-wrap:wrap}
-.wordmark{font-size:20px;letter-spacing:.30em;font-weight:500;text-transform:uppercase}
+.wordmark{font-size:18px;letter-spacing:.26em;font-weight:500;text-transform:uppercase}
+.wordmark sup{font-size:.45em;letter-spacing:0;margin-left:2px;vertical-align:.9em}
 .sigil{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;
   color:var(--ink-3);border:1px solid var(--rule-2);padding:3px 8px}
 
@@ -56,18 +59,36 @@ img{max-width:100%}
 .hero{padding-block:76px 20px}
 .hero .kicker{font-family:"IBM Plex Sans",sans-serif;font-size:10.5px;letter-spacing:.22em;
   text-transform:uppercase;color:var(--rubric);font-weight:600;margin-bottom:20px}
-.hero h1{font-size:clamp(42px,7.2vw,80px);line-height:1.02;margin:0 0 22px;font-weight:400;
+.hero h1{font-size:clamp(42px,7.2vw,80px);line-height:1.02;margin:0 0 24px;font-weight:400;
   letter-spacing:-.018em;text-wrap:balance}
 .hero h1 em{font-style:italic;color:var(--rubric)}
-.hero .lede{font-size:clamp(19px,2.3vw,24px);color:var(--ink-2);margin:0;max-width:33ch;line-height:1.44}
+.hero .lede{font-size:clamp(21px,2.6vw,27px);color:var(--ink);margin:0 0 14px;line-height:1.32;
+  text-wrap:balance}
+.hero .regline{font-family:"IBM Plex Sans",sans-serif;font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:600;margin:0 0 14px}
+.hero .regline b{color:var(--ink-2);font-weight:600}
+.hero .support{font-size:clamp(18px,2vw,20px);color:var(--ink-2);margin:0;max-width:40ch;line-height:1.46}
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:30px}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--rubric);color:var(--vellum);
+  font-family:"IBM Plex Sans",sans-serif;font-size:14px;font-weight:600;letter-spacing:.02em;
+  padding:12px 18px;border-radius:2px;text-decoration:none;border:0;cursor:pointer}
+.cta:hover{filter:brightness(1.08)}
+.cta:focus-visible,.tab:focus-visible,.why-btn:focus-visible{outline:2px solid var(--rubric);outline-offset:3px}
+.draft-chip{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--rubric);border:1px solid var(--rubric);padding:5px 9px;border-radius:2px}
 
 /* ---------- rule ---------- */
 .rule{height:1px;background:var(--rule);margin-block:56px}
-.rule.tight{margin-block:38px}
 
 /* ---------- specimen ---------- */
 .eyebrow{font-family:"IBM Plex Sans",sans-serif;font-size:10px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--ink-3);font-weight:600;margin:0 0 22px}
+  text-transform:uppercase;color:var(--ink-3);font-weight:600;margin:0 0 16px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 26px}
+.tab{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.08em;
+  background:transparent;border:1px solid var(--rule-2);color:var(--ink-2);
+  padding:7px 11px;border-radius:2px;cursor:pointer}
+.tab:hover{border-color:var(--ink-3);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--vellum)}
 .ref{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.11em;
   color:var(--rubric);margin-bottom:13px}
 .src-line{padding:15px 19px;background:var(--panel);border:1px solid var(--rule);
@@ -77,7 +98,40 @@ img{max-width:100%}
 .reg:first-of-type{border-top:0}
 .reg .lab{font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--ink-3);font-weight:600}
-.reg .txt{font-size:20.5px;line-height:1.42}
+.reg .txt{font-size:20.5px;line-height:1.42;white-space:pre-line}
+
+/* decision-type labels */
+.kinds{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.kind{font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  font-weight:600;padding:4px 8px;border-radius:2px;border:1px solid currentColor;white-space:nowrap}
+.kind.open{color:var(--rubric);background:var(--rubric-soft)}
+.kind.variant{color:var(--gold)}
+.kind.interp{color:var(--ink-2)}
+.kind.plain{color:var(--ink-3)}
+
+.why-btn{display:flex;width:100%;justify-content:space-between;align-items:center;gap:12px;
+  background:var(--panel);border:1px solid var(--rubric);color:var(--rubric);
+  font-family:"IBM Plex Sans",sans-serif;font-size:14px;font-weight:600;letter-spacing:.01em;
+  padding:11px 14px;border-radius:2px;cursor:pointer;text-align:left}
+.why-btn:hover{background:var(--rubric-soft)}
+.why-btn .chev{font-family:"IBM Plex Mono",monospace;font-size:13px;transition:transform .15s}
+.why-btn[aria-expanded="true"] .chev{transform:rotate(90deg)}
+.why{margin-top:18px}
+.why h4{font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.19em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600;margin:18px 0 8px}
+.why h4:first-child{margin-top:0}
+.why h4.red{color:var(--rubric)}
+.why p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 11px}
+.why .none{font-style:italic;color:var(--ink-3)}
+.why .src-note{font-family:"IBM Plex Sans",sans-serif;font-size:11.5px;line-height:1.5;color:var(--ink-3);
+  border-top:1px solid var(--rule);padding-top:12px;margin-top:16px}
+
+/* ---------- legend ---------- */
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin-top:26px}
+.legend > div{background:var(--vellum);padding:18px 18px 20px}
+.legend .kind{display:inline-block;margin-bottom:10px}
+.legend p{margin:0;font-size:16.5px;line-height:1.5;color:var(--ink-2)}
 
 /* ---------- registers explainer ---------- */
 .defs{display:grid;gap:0}
@@ -87,6 +141,19 @@ img{max-width:100%}
 .def h3 span{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);
   letter-spacing:.1em;margin-left:9px}
 .def p{margin:0;color:var(--ink-2);font-size:17.5px;line-height:1.5}
+.pull{font-size:clamp(21px,2.5vw,25px);line-height:1.38;margin:0 0 18px;color:var(--ink);
+  border-left:2px solid var(--rubric);padding-left:18px;max-width:34ch}
+
+/* ---------- status ---------- */
+.ledger{border:1px solid var(--rule-2);border-radius:2px;background:var(--panel);margin-top:24px}
+.lrow{display:grid;grid-template-columns:118px 110px 1fr;gap:18px;align-items:baseline;
+  padding:16px 20px;border-top:1px solid var(--rule)}
+.lrow:first-child{border-top:0}
+.lrow .st{font-family:"IBM Plex Sans",sans-serif;font-size:10px;letter-spacing:.17em;text-transform:uppercase;font-weight:600}
+.lrow .ct{font-size:28px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.lrow .ds{font-size:16.5px;line-height:1.5;color:var(--ink-2)}
+.lrow.now .st{color:var(--rubric)}
+.lrow.later .st,.lrow.later .ct{color:var(--ink-3)}
 
 /* ---------- numbers ---------- */
 .figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));
@@ -96,13 +163,6 @@ img{max-width:100%}
 .fig .n.red{color:var(--rubric)}
 .fig .l{font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.15em;
   text-transform:uppercase;color:var(--ink-3);margin-top:8px;font-weight:500}
-
-/* ---------- status ---------- */
-.status{border:1px solid var(--rubric);background:var(--rubric-soft);padding:24px 27px;border-radius:2px}
-.status h3{margin:0 0 11px;font-family:"IBM Plex Sans",sans-serif;font-size:10.5px;
-  letter-spacing:.17em;text-transform:uppercase;color:var(--rubric);font-weight:600}
-.status p{margin:0 0 11px;font-size:18px;line-height:1.52}
-.status p:last-child{margin:0}
 
 h2.sec{font-size:clamp(28px,4.2vw,40px);line-height:1.1;margin:0 0 16px;font-weight:400;
   letter-spacing:-.014em;text-wrap:balance}
@@ -116,7 +176,8 @@ footer{border-top:1px solid var(--rule);margin-top:72px;padding-block:34px 56px;
 footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:26px}
 footer strong{color:var(--ink-2);font-weight:600;display:block;margin-bottom:6px;
   font-size:9.5px;letter-spacing:.15em;text-transform:uppercase}
-footer .tm{margin-top:26px;padding-top:18px;border-top:1px solid var(--rule);font-size:12px}
+footer .rights{margin-top:30px;padding-top:18px;border-top:1px solid var(--rule);font-size:12px;
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}
 
 @media (max-width:920px){
   .spread{grid-template-columns:1fr;gap:30px 0}
@@ -128,48 +189,69 @@ footer .tm{margin-top:26px;padding-top:18px;border-top:1px solid var(--rule);fon
   .hero{padding-block:52px 14px}
   .reg{grid-template-columns:1fr;gap:5px}
   .rule{margin-block:42px}
+  .lrow{grid-template-columns:1fr auto;gap:6px 14px}
+  .lrow .ds{grid-column:1 / -1}
 }
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.why-btn .chev{transition:none}}
 </style></head><body>
 
 <header class="top"><div class="leaf top-in">
-  <div class="wordmark">Scholia</div>
+  <div class="wordmark">The Scholia Bible<sup>&trade;</sup></div>
   <div class="sigil">SCH &middot; 66 BOOKS</div>
 </div></header>
 
 <main class="leaf">
 
   <section class="hero body-col">
-    <div class="kicker">A new translation of the Bible</div>
+    <div class="kicker">The transparent Bible translation</div>
     <h1>Every verse<br>shows its <em>work</em>.</h1>
-    <p class="lede">Three English registers for every verse &mdash; and beside each one, the reasoning that produced it.</p>
+    <p class="lede">Three ways to read. One source text. Every difference explained.</p>
+    <p class="regline"><b>Literal</b> &middot; <b>Everyday</b> &middot; <b>Conversational</b></p>
+    <p class="support">See the grammar, the alternatives, the textual questions and the decision behind every verse.</p>
+    <div class="hero-actions">
+      <a class="cta" href="#specimen">Why this wording? <span aria-hidden="true">&darr;</span></a>
+      <span class="draft-chip">First draft, complete &middot; Not yet reviewed</span>
+    </div>
   </section>
 
   <div class="rule"></div>
 
-  <section class="spread">
+  <!-- ================= SPECIMEN ================= -->
+  <section class="spread" id="specimen" aria-label="Specimen verses">
     <div>
-      <p class="eyebrow">Specimen &mdash; the first verse</p>
-      <div class="ref">GENESIS 1:1</div>
-      <div class="src-line heb">בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃</div>
-      <div class="reg"><div class="lab">Literal</div><div class="txt">In beginning created God the heavens and the earth.</div></div>
-      <div class="reg"><div class="lab">Everyday</div><div class="txt">In the beginning God created the heavens and the earth.</div></div>
-      <div class="reg"><div class="lab">Conversational</div><div class="txt">In the beginning, God created the heavens and the earth.</div></div>
+      <p class="eyebrow">Specimen &mdash; four verses</p>
+      <div class="tabs" role="tablist" aria-label="Choose a verse" id="tabs"></div>
+      <div class="ref" id="s-ref"></div>
+      <div class="src-line" id="s-src"></div>
+      <div id="s-regs"></div>
     </div>
-    <aside class="marginal">
-      <div class="tag">Recorded reasoning</div>
-      <p>בְּרֵאשִׁית is anarthrous &mdash; <em>in beginning</em>, not <em>in the beginning</em> &mdash; and the older reading takes it as a construct: <em>when God began to create</em>.</p>
-      <p>Both are defensible, and the choice decides whether verse 1 is the first act of creation or a title standing over the whole chapter.</p>
-      <p>The question is recorded against the verse. It has not been quietly settled.</p>
+    <aside class="marginal" aria-live="polite">
+      <div class="tag">What kind of decision</div>
+      <div class="kinds" id="s-kinds"></div>
+      <button class="why-btn" id="why-btn" aria-expanded="false" aria-controls="why">
+        <span>Why this wording?</span><span class="chev" aria-hidden="true">&rsaquo;</span>
+      </button>
+      <div class="why" id="why" hidden></div>
     </aside>
   </section>
 
+  <section class="body-col">
+    <div class="legend">
+      <div><span class="kind plain">Plain</span><p>The source is clear and the English follows it. No question is recorded against the verse.</p></div>
+      <div><span class="kind interp">Interpretive choice</span><p>The source allows more than one English. One was chosen, and the note says which and why.</p></div>
+      <div><span class="kind variant">Textual variant</span><p>Manuscripts or editions differ here. The note names the reading followed and the one set aside.</p></div>
+      <div><span class="kind open">Open question</span><p>The evidence does not settle it. The question is written down against the verse and left for review.</p></div>
+    </div>
+    <p class="body" style="margin-top:16px;font-size:16.5px">These labels describe the <em>kind</em> of decision a reader is looking at. They are not a score of how certain anyone should be.</p>
+  </section>
+
   <div class="rule"></div>
 
   <section class="spread">
     <div>
-      <h2 class="sec">Most translations hide the hard part.</h2>
-      <p class="body">Every translation of the Bible is a chain of decisions. A word carries three senses and one must be chosen. A clause can attach two ways. A pronoun's referent is genuinely unclear. Ordinarily those decisions are made carefully, by capable people &mdash; and then dissolved into the finished text, where the reader cannot see them, weigh them, or disagree.</p>
-      <p class="body"><strong>Scholia keeps them.</strong> Each rendering carries a note stating what was decided and why: which sense was taken, what the grammar permitted, where the registers diverge and on what grounds. Where the evidence genuinely does not settle the matter, the question is written down and left open rather than smoothed away.</p>
+      <h2 class="sec">Most translations can&rsquo;t show you the whole decision process. Scholia can.</h2>
+      <p class="body">Every translation of the Bible is a chain of decisions. A word carries three senses and one must be chosen. A clause can attach two ways. A pronoun&rsquo;s referent is genuinely unclear. Those decisions are ordinarily made carefully, by capable people &mdash; but a printed page has room for the result, not the reasoning.</p>
+      <p class="body"><strong>Scholia keeps the reasoning.</strong> Each rendering carries a note stating what was decided and why: which sense was taken, what the grammar permitted, where the registers diverge and on what grounds. Where the evidence genuinely does not settle the matter, the question is written down and left open rather than smoothed away.</p>
       <p class="body">The name is the method. <em>Scholia</em> (σχόλια) are the notes scholars wrote in the margins of ancient manuscripts, explaining and defending why a reading is what it is.</p>
     </div>
     <aside class="marginal">
@@ -184,10 +266,11 @@ footer .tm{margin-top:26px;padding-top:18px;border-top:1px solid var(--rule);fon
 
   <section class="body-col">
     <h2 class="sec">Three registers, not one compromise.</h2>
-    <p class="body">A translation usually picks a single point on the line between the words of the original and the language people actually speak, and everyone else adjusts. Scholia renders every verse three times and lets the reader choose.</p>
+    <p class="pull">One translation cannot be maximally literal, maximally readable and maximally conversational at the same time. Scholia keeps all three &mdash; and shows the trade-offs.</p>
+    <p class="body">A translation usually picks a single point on the line between the words of the original and the language people actually speak, and every reader adjusts to it. Scholia renders every verse three times and lets the reader choose.</p>
   </section>
 
-  <section class="defs body-col" style="margin-top:30px">
+  <section class="defs body-col" style="margin-top:22px">
     <div class="def"><h3>Literal <span>WORD ORDER PRESERVED</span></h3>
       <p>Follows the shape of the Hebrew or Greek as closely as English allows. Keeps ambiguity ambiguous rather than resolving it silently.</p></div>
     <div class="def"><h3>Everyday <span>READ ALOUD</span></h3>
@@ -204,14 +287,28 @@ footer .tm{margin-top:26px;padding-top:18px;border-top:1px solid var(--rule);fon
 
   <section class="body-col">
     <h2 class="sec">Drafted from the original languages.</h2>
-    <p class="body">Not revised from an existing English Bible. Every verse was drafted against the tagged Hebrew and Greek &mdash; lemma, morphology, and lexical range in view &mdash; using the <strong>STEP Bible</strong> tagged texts, with Strong's and Brown&#8209;Driver&#8209;Briggs for lexical data.</p>
-    <p class="body"><strong>The base text is named, not blended.</strong> The New Testament follows the <strong>SBL Greek New Testament</strong>. Passages the manuscript tradition carries but the base text does not treat as original &mdash; the long ending of Mark, the woman taken in adultery, the Johannine Comma &mdash; are printed in brackets and identified, never dropped without a word and never presented as though undisputed. The Old Testament follows the <strong>Leningrad Codex</strong>, a single manuscript witness, with Ketiv/Qere carried at word level.</p>
+    <p class="body">Not revised from an existing English Bible. Every verse was drafted against the tagged Hebrew and Greek &mdash; lemma, morphology, and lexical range in view &mdash; using the <strong>STEP Bible</strong> tagged texts, with Strong&rsquo;s and Brown&#8209;Driver&#8209;Briggs for lexical data.</p>
+    <p class="body"><strong>The base text is named, not blended.</strong> The base text of the New Testament is the <strong>SBL Greek New Testament</strong>. Passages it marks as later additions &mdash; the long ending of Mark, the woman taken in adultery &mdash; are printed in brackets and identified, never dropped without a word and never presented as though undisputed. The Old Testament follows the <strong>Leningrad Codex</strong>, with Ketiv/Qere carried at word level; where a word is supplied from another witness, that is recorded against the verse.</p>
   </section>
 
   <div class="rule"></div>
 
+  <!-- ================= STATUS ================= -->
   <section class="body-col">
-    <p class="eyebrow">First draft, complete</p>
+    <p class="eyebrow">Where every verse stands</p>
+    <h2 class="sec">First draft, complete. Not yet reviewed.</h2>
+    <p class="body">A complete draft is not a finished Bible. Every rendering passes through three states, and none moves past the first without a named reviewer.</p>
+    <div class="ledger">
+      <div class="lrow now"><div class="st">Draft</div><div class="ct">93,657</div>
+        <div class="ds">Rendered in its register, with the reasoning recorded. Not yet examined by a reviewer.</div></div>
+      <div class="lrow later"><div class="st">Reviewed</div><div class="ct">0</div>
+        <div class="ds">Examined and signed by a named reviewer, who stands behind the rendering.</div></div>
+      <div class="lrow later"><div class="st">Stable</div><div class="ct">0</div>
+        <div class="ds">Reviewed, with no question left open on the verse. Fixed for print.</div></div>
+    </div>
+  </section>
+
+  <section class="body-col" style="margin-top:30px">
     <div class="figs">
       <div class="fig"><div class="n">66</div><div class="l">books</div></div>
       <div class="fig"><div class="n">31,219</div><div class="l">verses</div></div>
@@ -227,18 +324,135 @@ footer .tm{margin-top:26px;padding-top:18px;border-top:1px solid var(--rule);fon
         Drafted from the tagged original-language texts of <a href="https://www.STEPBible.org">STEP&nbsp;Bible</a> &mdash; the Translators Amalgamated Greek New Testament (TAGNT) and Translators Amalgamated Hebrew Old Testament (TAHOT) &mdash; used under CC&nbsp;BY&nbsp;4.0. The data was reformatted into a verse-indexed corpus and filtered to a single named base edition; those changes are ours.
       </div>
       <div>
-        <strong>Lexical data</strong>
-        Strong's Concordance and Brown-Driver-Briggs, both public domain. Historical comment drawn from public-domain patristic, medieval and Reformation sources.
+        <strong>Lexical &amp; historical sources</strong>
+        Strong&rsquo;s Concordance and Brown-Driver-Briggs, both public domain. Historical comment drawn from public-domain patristic, medieval and Reformation sources.
       </div>
       <div>
         <strong>Publisher</strong>
         The Scholia Bible is a project of Phrontis Holdings LLC, Herndon, Virginia.
       </div>
     </div>
-    <div class="tm">
-      SCHOLIA&trade; is a trademark of Phrontis Holdings LLC. &copy; 2026 Phrontis Holdings LLC. All rights reserved.<br>
-      Scripture renderings are unpublished drafts and are not licensed for reproduction.
+    <div class="rights">
+      <span>SCHOLIA&trade; is a trademark of Phrontis Holdings LLC. &copy; 2026 Phrontis Holdings LLC. All rights reserved.</span>
+      <span>Scripture renderings are unpublished drafts and are not licensed for reproduction.</span>
     </div>
   </footer>
 </main>
+
+<script>
+/* Every string below is taken from the corpus record for the verse (renderings verbatim;
+   reasoning excerpted from each rendering's recorded decision and open questions). */
+const H = s => '<span class="hi" dir="rtl" lang="he">' + s + '</span>';
+const G = s => '<span class="gi" lang="grc">' + s + '</span>';
+const KIND = {
+  plain:   ['plain',   'Plain'],
+  interp:  ['interp',  'Interpretive choice'],
+  variant: ['variant', 'Textual variant'],
+  open:    ['open',    'Open question']
+};
+const S = [
+  { id:'gen', tab:'Genesis 1:1', ref:'GENESIS 1:1', lang:'he',
+    src:'בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃',
+    regs:[['Literal','In beginning created God the heavens and the earth.'],
+          ['Everyday','In the beginning God created the heavens and the earth.'],
+          ['Conversational','In the beginning, God created the heavens and the earth.']],
+    kinds:['interp','open'],
+    why:[ H('בְּרֵאשִׁית')+' is anarthrous &mdash; <em>in beginning</em>, not <em>in the beginning</em> &mdash; and the older reading takes it as a construct: <em>when God began to create</em>.',
+          'Both are defensible, and the choice decides whether verse 1 is the first act of creation or a title standing over the whole chapter.',
+          H('אֱלֹהִים')+' is plural in form but takes a singular verb, and is rendered <em>God</em>. '+H('אֶרֶץ')+' is <em>earth</em> where the scope is cosmic, as here, and <em>land</em> where it is territorial; the same noun does both jobs, and no register may blur them.' ],
+    open:[ 'Whether verse 1 is an independent clause or a temporal one (<em>When God began to create&hellip;</em>). That decides whether Genesis opens with creation from nothing or with God ordering a chaos already there. The question is recorded against the verse. It has not been quietly settled.' ] },
+
+  { id:'jhn', tab:'John 1:1', ref:'JOHN 1:1', lang:'grc',
+    src:'Ἐν ἀρχῇ ἦν ὁ λόγος, καὶ ὁ λόγος ἦν πρὸς τὸν θεόν, καὶ θεὸς ἦν ὁ λόγος.',
+    regs:[['Literal','In beginning was the Word, and the Word was toward God, and God was the Word.'],
+          ['Everyday','In the beginning was the Word, and the Word was with God, and the Word was God.'],
+          ['Conversational','In the beginning was the Word, and the Word was with God, and the Word was God.']],
+    kinds:['interp','open'],
+    why:[ G('πρὸς τὸν θεόν')+' is <em>toward</em> &mdash; a word of orientation rather than mere company. The literal register keeps it; the others read <em>with</em>.',
+          'In the third clause '+G('θεός')+' has no article and stands before the verb, which marks a predicate of category, not indefiniteness. The rendering follows the mainstream grammatical judgement. The literal keeps the Greek order: <em>God was the Word</em>.',
+          'Conversational matches everyday here. The cadence is already the point, and relaxing it would cost more than it gained.' ],
+    open:[ G('λόγος')+' has no one-word English equivalent: spoken word, reason, account, the creative speech of Genesis 1. <em>Word</em> is the traditional English and carries only the first. Whether to keep it is a live question.',
+           'The missing article on '+G('θεός')+' has been read as <em>a god</em>. Because this is among the most contested renderings in the New Testament, the reasoning is to be stated in full rather than assumed.' ] },
+
+  { id:'ps23', tab:'Psalm 23:1', ref:'PSALM 23:1', lang:'he',
+    src:'יְהוָ֥ה רֹ֝עִ֗י לֹ֣א אֶחְסָֽר׃',
+    regs:[['Literal','YHWH is my shepherd;\nI do not lack.'],
+          ['Everyday','The LORD is my shepherd;\nI lack nothing.'],
+          ['Conversational','The LORD is my shepherd;\nI lack nothing.']],
+    kinds:['interp'],
+    why:[ H('לֹא אֶחְסָר')+' is <em>I do not lack</em> &mdash; an intransitive verb with no object.',
+          '<em>I shall not want</em> is the King James wording and is set aside: <em>want</em> in that sense is no longer living English, and is heard as desire rather than lack.',
+          'The literal register keeps the verb bare, exactly as the Hebrew leaves it. The readable registers supply <em>nothing</em> &mdash; the minimum English needs &mdash; and the addition is flagged.',
+          H('רֹעֶה')+', <em>shepherd</em>, shares its consonants with the disputed verb at Psalm 2:9, which the Septuagint read as <em>you shall shepherd them</em>. The connection is noted; it does not change the ruling there.' ],
+    open:[] },
+
+  { id:'ps100', tab:'Psalm 100:3', ref:'PSALM 100:3', lang:'he',
+    src:'דְּע֗וּ כִּֽי־יְהוָה֮ ה֤וּא אֱלֹ֫הִ֥ים הֽוּא־עָ֭שָׂנוּ וְל֣וֹ אֲנַ֑חְנוּ עַ֝מּ֗וֹ וְצֹ֣אן מַרְעִיתֽוֹ׃',
+    regs:[['Literal','Know that YHWH — he is God.\nHe made us, and we are his,\nhis people and the flock of his pasture.'],
+          ['Everyday','Know that the LORD — he is God.\nHe made us, and we are his,\nhis people and the flock of his pasture.'],
+          ['Conversational','Know that the LORD — he is God.\nHe made us, and we are his,\nhis people, the flock of his pasture.']],
+    kinds:['variant','open'],
+    why:[ 'The consonants written in the text are '+H('וְלֹא')+', <em>and not</em>: <em>he made us, and not we ourselves</em> &mdash; the reading the King James follows. The reading handed down for reading aloud, the <em>qere</em>, is '+H('וְלוֹ')+', <em>and to him</em>: <em>he made us, and we are his</em>.',
+          'The edition follows the qere in all three registers. But the two differ in sense &mdash; one denies that we made ourselves, the other says we belong to him &mdash; so the written form is recorded here rather than dropped. A qere followed silently is a decision made by stealth.',
+          '<em>The flock of his pasture</em> inverts Psalm 95:7&rsquo;s <em>the people of his pasture and the flock of his hand</em>. The inversion is rendered, not levelled.' ],
+    open:[ 'Ketiv against qere, with a real difference in sense. The qere is followed by policy; a scholar must sign.' ] }
+];
+
+const $ = id => document.getElementById(id);
+let cur = 0, open = false;
+
+function renderWhy(s){
+  let h = '<h4>Recorded reasoning</h4>' + s.why.map(p => '<p>'+p+'</p>').join('');
+  h += '<h4 class="red">Left open</h4>';
+  h += s.open.length ? s.open.map(p => '<p>'+p+'</p>').join('')
+                     : '<p class="none">No question is left open on this verse.</p>';
+  h += '<p class="src-note">Draft &mdash; not yet reviewed. Excerpted from the reasoning recorded against this verse.</p>';
+  return h;
+}
+
+function show(i, focus){
+  cur = i; const s = S[i];
+  document.querySelectorAll('.tab').forEach((t,j) => {
+    t.setAttribute('aria-selected', j===i ? 'true' : 'false');
+    t.tabIndex = j===i ? 0 : -1;
+  });
+  $('s-ref').textContent = s.ref;
+  const src = $('s-src');
+  src.className = 'src-line ' + (s.lang==='he' ? 'heb' : 'grk');
+  src.lang = s.lang; src.dir = s.lang==='he' ? 'rtl' : 'ltr';
+  src.textContent = s.src;
+  $('s-regs').innerHTML = s.regs.map(r =>
+    '<div class="reg"><div class="lab">'+r[0]+'</div><div class="txt"></div></div>').join('');
+  $('s-regs').querySelectorAll('.txt').forEach((el,j) => el.textContent = s.regs[j][1]);
+  $('s-kinds').innerHTML = s.kinds.map(k => '<span class="kind '+KIND[k][0]+'">'+KIND[k][1]+'</span>').join('');
+  $('why').innerHTML = renderWhy(s);
+  if (focus) document.querySelectorAll('.tab')[i].focus();
+}
+
+function setOpen(v){
+  open = v;
+  $('why-btn').setAttribute('aria-expanded', v ? 'true' : 'false');
+  $('why').hidden = !v;
+}
+
+(function init(){
+  const tl = $('tabs');
+  S.forEach((s,i) => {
+    const b = document.createElement('button');
+    b.className = 'tab'; b.type = 'button'; b.setAttribute('role','tab');
+    b.id = 'tab-'+s.id; b.textContent = s.tab;
+    b.addEventListener('click', () => show(i));
+    tl.appendChild(b);
+  });
+  tl.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      show((cur + (e.key === 'ArrowRight' ? 1 : S.length - 1)) % S.length, true);
+    }
+  });
+  $('why-btn').addEventListener('click', () => setOpen(!open));
+  document.querySelector('.cta').addEventListener('click', () => setOpen(true));
+  show(0);
+})();
+</script>
 </body></html>
