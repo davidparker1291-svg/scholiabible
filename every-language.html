@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Every Language — The Scholia Bible</title>
+<meta name="description" content="Where complete Scripture exists, where it does not, and where Scholia actually stands. Every figure sourced and dated.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Frank+Ruhl+Libre:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --vellum:#F6F4EE; --panel:#FFFDF8; --ink:#1C1A17; --ink-2:#5A554C; --ink-3:#8B8478;
+  --rubric:#9E2B25; --rubric-soft:#F2E5E1; --rule:#DAD4C6; --rule-2:#C3BBA8; --gold:#8A6D2F;
+  /* Sequential ramp — degree of Scripture access. Monotonic in lightness
+     (rel. L 0.094 → 0.245 → 0.529); the unreached tier carries the rubric.
+     Every segment is directly labelled and repeated in the table below,
+     which is the relief the palest step requires (1.65:1 on vellum). */
+  --tier-full:#6E5214; --tier-nt:#A8822A; --tier-por:#D8BE7E; --tier-none:#9E2B25;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --vellum:#15140F; --panel:#1D1B16; --ink:#EDE8DC; --ink-2:#B0A996; --ink-3:#7E7869;
+  --rubric:#D8837C; --rubric-soft:#2E1D1B; --rule:#332F26; --rule-2:#4A4536; --gold:#C4A254;
+  --tier-full:#E6CE93; --tier-nt:#C09A45; --tier-por:#7E6528; --tier-none:#D8837C;
+}}
+:root[data-theme="dark"]{
+  --vellum:#15140F; --panel:#1D1B16; --ink:#EDE8DC; --ink-2:#B0A996; --ink-3:#7E7869;
+  --rubric:#D8837C; --rubric-soft:#2E1D1B; --rule:#332F26; --rule-2:#4A4536; --gold:#C4A254;
+  --tier-full:#E6CE93; --tier-nt:#C09A45; --tier-por:#7E6528; --tier-none:#D8837C;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--vellum);color:var(--ink);
+  font-family:"EB Garamond","Iowan Old Style",Palatino,Georgia,serif;
+  font-size:19px;line-height:1.58;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.sans{font-family:"IBM Plex Sans",sans-serif}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+
+.top{border-bottom:1px solid var(--rule)}
+.top-in{max-width:1240px;margin:0 auto;padding:17px 24px;display:flex;
+  justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.wordmark{font-size:18px;letter-spacing:.26em;font-weight:500;text-transform:uppercase;text-decoration:none}
+.wordmark sup{font-size:.45em;letter-spacing:0;margin-left:2px;vertical-align:.9em}
+.sigil{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;
+  color:var(--ink-3);border:1px solid var(--rule-2);padding:3px 8px}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px;
+  display:grid;grid-template-columns:196px minmax(0,1fr);gap:0 46px;align-items:start}
+nav.side{position:sticky;top:26px;padding-top:54px;border-right:1px solid var(--rule);
+  padding-right:22px;min-height:100vh}
+nav.side .navlab{font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.19em;
+  text-transform:uppercase;color:var(--rubric);font-weight:600;margin-bottom:14px}
+nav.side a{display:block;font-family:"IBM Plex Sans",sans-serif;font-size:13.5px;
+  color:var(--ink-2);text-decoration:none;padding:7px 0;border-top:1px solid var(--rule)}
+nav.side a:first-of-type{border-top:0}
+nav.side a:hover{color:var(--rubric)}
+main{padding-bottom:90px;min-width:0}
+
+.kicker{font-family:"IBM Plex Sans",sans-serif;font-size:10.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--rubric);font-weight:600;margin:54px 0 18px}
+h1{font-size:clamp(40px,6.6vw,74px);line-height:1.02;margin:0 0 18px;font-weight:400;
+  letter-spacing:-.018em}
+.creed{font-family:"IBM Plex Sans",sans-serif;font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:600;margin:0 0 30px}
+.lede{font-size:clamp(20px,2.4vw,25px);line-height:1.34;margin:0 0 10px;max-width:34ch}
+.support{font-size:18px;color:var(--ink-2);margin:0;max-width:56ch;line-height:1.5}
+
+h2{font-size:clamp(25px,3vw,33px);font-weight:400;letter-spacing:-.008em;margin:0 0 8px;line-height:1.14}
+.sechead{margin-top:62px;padding-top:26px;border-top:1px solid var(--rule)}
+.sub{color:var(--ink-2);font-size:17.5px;margin:0 0 24px;max-width:62ch;line-height:1.5}
+
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:14px;margin:26px 0 8px}
+.tile{background:var(--panel);border:1px solid var(--rule);border-radius:2px;padding:17px 18px 15px}
+.tile .tl{font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.tile .tn{font-size:40px;line-height:1.05;margin:9px 0 5px;letter-spacing:-.02em}
+.tile .td{font-family:"IBM Plex Sans",sans-serif;font-size:11.5px;color:var(--ink-2);line-height:1.34}
+
+.asof{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;
+  color:var(--ink-3);margin:12px 0 0}
+.asof a{color:var(--rubric)}
+
+/* stacked bar */
+figure{margin:28px 0 0}
+.bar{display:flex;width:100%;height:56px;border-radius:2px;overflow:hidden;gap:2px;background:var(--vellum)}
+.seg{position:relative}
+.seg.full{background:var(--tier-full)} .seg.nt{background:var(--tier-nt)}
+.seg.por{background:var(--tier-por)} .seg.none{background:var(--tier-none)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin:15px 0 0;
+  font-family:"IBM Plex Sans",sans-serif;font-size:12.5px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.sw{width:13px;height:13px;border-radius:2px;flex:none}
+figcaption{font-family:"IBM Plex Sans",sans-serif;font-size:12.5px;color:var(--ink-3);
+  margin-top:13px;line-height:1.5;max-width:64ch}
+
+table{border-collapse:collapse;width:100%;margin-top:22px;font-size:16.5px}
+th,td{text-align:left;padding:9px 12px 9px 0;border-top:1px solid var(--rule);vertical-align:top}
+thead th{border-top:0;font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:600}
+td.n{font-family:"IBM Plex Mono",monospace;white-space:nowrap}
+
+.panel{background:var(--panel);border:1px solid var(--rule);border-radius:2px;padding:24px 26px;margin-top:26px}
+.kv{display:grid;grid-template-columns:1fr auto;gap:0;margin:0}
+.kv div{display:contents}
+.kv dt,.kv dd{padding:11px 0;border-top:1px solid var(--rule);margin:0}
+.kv dt{color:var(--ink-2);font-size:17px}
+.kv dd{font-family:"IBM Plex Mono",monospace;font-size:15px;text-align:right;white-space:nowrap}
+.kv .first dt,.kv .first dd{border-top:0}
+.kv .flag dd{color:var(--rubric);font-weight:500}
+
+.concept{border:1px dashed var(--rule-2);border-radius:2px;padding:22px 24px;margin-top:26px;background:transparent}
+.concept .badge{display:inline-block;font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;
+  letter-spacing:.17em;text-transform:uppercase;font-weight:600;color:var(--rubric);
+  border:1px solid var(--rubric);border-radius:2px;padding:3px 8px;margin-bottom:14px}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:6px 0 0}
+.step{background:var(--panel);border:1px solid var(--rule);border-radius:2px;padding:13px 14px}
+.step .sn{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-3);letter-spacing:.14em}
+.step .st{font-family:"IBM Plex Sans",sans-serif;font-size:12.5px;font-weight:600;margin:5px 0 4px}
+.step .sd{font-size:14.5px;color:var(--ink-2);line-height:1.38}
+.principle{margin:18px 0 0;font-size:18px;line-height:1.45}
+.principle b{color:var(--rubric);font-weight:500}
+
+ul.plain{margin:14px 0 0;padding:0;list-style:none}
+ul.plain li{padding:11px 0 11px 26px;border-top:1px solid var(--rule);
+  color:var(--ink-2);font-size:17.5px;line-height:1.45;position:relative}
+ul.plain li:before{content:"\2014";position:absolute;left:0;color:var(--rubric)}
+
+.vision{margin-top:62px;padding:30px 30px 32px;background:var(--ink);color:var(--vellum);border-radius:2px}
+.vision .vl{font-family:"IBM Plex Sans",sans-serif;font-size:9.5px;letter-spacing:.19em;
+  text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:16px}
+.vision p{margin:0;font-size:clamp(23px,3vw,31px);line-height:1.2}
+.vision .vs{margin-top:16px;font-family:"IBM Plex Sans",sans-serif;font-size:12.5px;
+  letter-spacing:.06em;color:var(--rule-2);line-height:1.5}
+
+footer{border-top:1px solid var(--rule);margin-top:70px;padding:26px 0 0;
+  font-family:"IBM Plex Sans",sans-serif;font-size:12px;color:var(--ink-3);line-height:1.65}
+footer a{color:var(--rubric)}
+
+@media (max-width:880px){
+  .wrap{grid-template-columns:1fr;gap:0}
+  nav.side{position:static;min-height:0;border-right:0;border-bottom:1px solid var(--rule);
+    padding:22px 0 16px;display:flex;flex-wrap:wrap;gap:0 18px}
+  nav.side .navlab{width:100%;margin-bottom:8px}
+  nav.side a{border-top:0;padding:4px 0}
+  .kicker{margin-top:30px}
+  .kv dd{font-size:13.5px}
+}
+</style></head><body>
+
+<header class="top"><div class="top-in">
+  <a class="wordmark" href="/">Scholia<sup>&trade;</sup></a>
+  <span class="sigil">EVERY LANGUAGE</span>
+</div></header>
+
+<div class="wrap">
+<nav class="side" aria-label="Sections">
+  <div class="navlab">Contents</div>
+  <a href="#need">The need</a>
+  <a href="#access">Scripture access</a>
+  <a href="#standing">Where Scholia stands</a>
+  <a href="#graph">Translation graph</a>
+  <a href="#saynot">What we will not say</a>
+  <a href="#sources">Sources</a>
+  <a href="/">The Scholia Bible</a>
+</nav>
+
+<main>
+  <p class="kicker">Scripture for a flourishing world</p>
+  <h1>Every language.</h1>
+  <p class="creed">AI-assisted &middot; Human-authorized &middot; Source-transparent</p>
+  <p class="lede">Most of the world&rsquo;s languages still do not have a whole Bible.</p>
+  <p class="support">Every figure on this page is taken from a published source, dated, and linked. Where Scholia has not done something yet, this page says so.</p>
+
+  <section id="need">
+    <div class="sechead"><h2>The need, as the data actually reports it</h2></div>
+    <p class="sub">Wycliffe Bible Translators&rsquo; global statistics, updated 1 September 2026.</p>
+
+    <div class="tiles">
+      <div class="tile"><div class="tl">Known languages</div><div class="tn">7,394</div><div class="td">Living spoken &amp; signed</div></div>
+      <div class="tile"><div class="tl">Complete Bible</div><div class="tn">807</div><div class="td">10.9% of languages</div></div>
+      <div class="tile"><div class="tl">Work in progress</div><div class="tn">4,414</div><div class="td">Translation or preparatory work underway</div></div>
+      <div class="tile"><div class="tl">Need work to begin</div><div class="tn">543</div><div class="td">38 million people, where translation is viable and has not started</div></div>
+    </div>
+    <p class="asof">As of 2026-09-01 &middot; <a href="https://www.wycliffe.org.uk/statistics/">wycliffe.org.uk/statistics</a> &middot; <a href="https://www.wycliffe.org.uk/about/faqs/">FAQs</a></p>
+  </section>
+
+  <section id="access">
+    <div class="sechead"><h2>Where complete Scripture exists</h2></div>
+    <p class="sub">The 7,394 languages divide into four tiers, ordered from most Scripture to least. The rubric band at the end is the languages with none yet.</p>
+
+    <figure>
+      <div class="bar" role="img" aria-label="Of 7,394 languages: 807 have a complete Bible, 1,844 a New Testament, 1,519 Scripture portions, and 3,224 have no Scripture yet.">
+        <div class="seg full" style="width:10.91%"></div>
+        <div class="seg nt"   style="width:24.94%"></div>
+        <div class="seg por"  style="width:20.54%"></div>
+        <div class="seg none" style="width:43.60%"></div>
+      </div>
+      <div class="legend">
+        <span><i class="sw" style="background:var(--tier-full)"></i>Complete Bible &mdash; 807</span>
+        <span><i class="sw" style="background:var(--tier-nt)"></i>New Testament &mdash; 1,844</span>
+        <span><i class="sw" style="background:var(--tier-por)"></i>Portions &mdash; 1,519</span>
+        <span><i class="sw" style="background:var(--tier-none)"></i>No Scripture yet &mdash; 3,224</span>
+      </div>
+      <figcaption>The four tiers sum to 7,394. Of the 3,224 languages with no Scripture, <b>1,688 have no translation work started at all</b>. Wycliffe separately reports that 6,587 languages lack a whole Bible in their first language, and that more than 1 in 5 people worldwide have no complete Bible in the language they think in.</figcaption>
+    </figure>
+
+    <table>
+      <thead><tr><th>Tier</th><th>Languages</th><th>Share of 7,394</th></tr></thead>
+      <tbody>
+        <tr><td>Complete Bible</td><td class="n">807</td><td class="n">10.9%</td></tr>
+        <tr><td>New Testament</td><td class="n">1,844</td><td class="n">24.9%</td></tr>
+        <tr><td>Scripture portions</td><td class="n">1,519</td><td class="n">20.5%</td></tr>
+        <tr><td>No Scripture yet</td><td class="n">3,224</td><td class="n">43.6%</td></tr>
+        <tr><td>&mdash; of those, no work started</td><td class="n">1,688</td><td class="n">22.8%</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="standing">
+    <div class="sechead"><h2>Where Scholia actually stands</h2></div>
+    <p class="sub">Scholia is one English edition, drafted from tagged Hebrew and Greek, in first draft and under review. It has translated nothing into another language. These are the real counts, taken from the working corpus.</p>
+
+    <div class="panel">
+      <dl class="kv">
+        <div class="first"><dt>Books drafted</dt><dd>66 of 66</dd></div>
+        <div><dt>Verses drafted</dt><dd>31,219</dd></div>
+        <div><dt>Renderings (three registers)</dt><dd>93,657</dd></div>
+        <div><dt>Open questions left visible</dt><dd>3,380</dd></div>
+        <div><dt>Decision records prepared for signature</dt><dd>84</dd></div>
+        <div class="flag"><dt>Verses signed</dt><dd>0</dd></div>
+      </dl>
+    </div>
+    <p class="asof">Corpus counts from <span class="mono">tools/status.py</span> and the decision register, 2026-09-18. The 84 prepared records cover Titus (23), Jude (22), Philemon (16), 2 John (11) and 3 John (12); all currently stand at draft. The Reviewer Agreement was signed by the general editor on 2026-09-14; a second biblical-languages reviewer has not yet signed.</p>
+    <p class="support" style="margin-top:20px">Nothing is signed yet, and the site says so. A translation that hides its unresolved questions is asking to be trusted; one that publishes them is offering to be checked.</p>
+  </section>
+
+  <section id="graph">
+    <div class="sechead"><h2>How Scholia intends to serve other languages</h2></div>
+    <p class="sub">The architecture below is a design, not a running system. It is published so partners can evaluate the approach before anything is built on it.</p>
+
+    <div class="concept">
+      <span class="badge">Concept &mdash; not yet built</span>
+      <div class="flow">
+        <div class="step"><div class="sn">01</div><div class="st">SOURCE</div><div class="sd">Tagged Hebrew, Aramaic and Greek; morphology, syntax, variants</div></div>
+        <div class="step"><div class="sn">02</div><div class="st">MEANING</div><div class="sd">Semantic graph; referents, ambiguity, discourse</div></div>
+        <div class="step"><div class="sn">03</div><div class="st">DECISION</div><div class="sd">Rationale and alternatives, with no hidden interpretive steps</div></div>
+        <div class="step"><div class="sn">04</div><div class="st">LANGUAGE</div><div class="sd">Grammar, orthography, idiom, community terminology</div></div>
+        <div class="step"><div class="sn">05</div><div class="st">REVIEW</div><div class="sd">Native-speaker and consultant validation before any release</div></div>
+      </div>
+      <p class="principle"><b>The principle:</b> English is an output of the graph, not the master source every other language is translated from.</p>
+    </div>
+  </section>
+
+  <section id="saynot">
+    <div class="sechead"><h2>What we will not say</h2></div>
+    <p class="sub">Published deliberately, because a project like this is judged by the claims it refuses to make.</p>
+    <ul class="plain">
+      <li>We will not say that AI translated the Bible. AI drafts; people with names and credentials authorize.</li>
+      <li>We will not promise a whole Bible in thousands of languages on a timeline, before a single pilot has a measured baseline.</li>
+      <li>We will not imply that a language without a complete Bible has no Scripture at all. Most have a New Testament or portions.</li>
+      <li>We will not describe the organizations already doing this work as slow or obsolete. The fastest path runs through them, not around them.</li>
+      <li>We will not show a verse as reviewed, tested or approved until a named human has done it.</li>
+    </ul>
+  </section>
+
+  <div class="vision">
+    <div class="vl">Our vision</div>
+    <p>A Bible in every language.<br>A soul in every people.</p>
+    <p class="vs">Technology that serves the Great Commission &mdash; open hands, faithful to the text, for every nation.</p>
+  </div>
+
+  <footer id="sources">
+    <p><b>Sources.</b>
+      Language, Scripture-access and translation-need figures: Wycliffe Bible Translators,
+      <a href="https://www.wycliffe.org.uk/statistics/">Bible translation statistics</a> (updated 1 September 2026) and
+      <a href="https://www.wycliffe.org.uk/about/faqs/">FAQs</a>.
+      Scholia corpus figures are generated from the project&rsquo;s own working files on 2026-09-18.
+      Page figures are reproduced as published; Scholia does not restate them as its own findings.</p>
+    <p>Scholia&trade; is a trademark application of Phrontis Holdings LLC. Every verse shows its work. &mdash; <a href="/">scholiabible.com</a></p>
+  </footer>
+</main>
+</div>
+</body></html>
