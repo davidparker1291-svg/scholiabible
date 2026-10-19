@@ -1,0 +1,9 @@
+The Scholia Bible (TSB) — draft text, version 1 (19 October 2026)
+© 2026 Phrontis Holdings LLC. Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+Credit: "Scripture quotations are from The Scholia Bible (TSB), © 2026 Phrontis Holdings LLC, CC BY 4.0."
+"The Scholia Bible" and "Scholia" are trademarks of Phrontis Holdings LLC and may not be used for a modified text.
+This is a DRAFT: drafted with the help of AI and decided by the editors; not every verse has yet been signed.
+Sources: New Testament from the SBL Greek New Testament (SBLGNT, © SBL and Logos Bible Software, CC BY 4.0);
+Old Testament from the Leningrad Codex as tagged in STEPBible TAHOT (Tyndale House, Cambridge, CC BY 4.0).
+Files: tsb.json (Everyday), tsbl.json (Literal), tsbc.json (Conversational). Format: {"book_chapter":[{"n":verse,"t":text}]}.
