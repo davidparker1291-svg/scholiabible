@@ -6,6 +6,6 @@ Credit: "Scripture quotations are from The Scholia Bible (TSB), © 2026 Phrontis
 This is a DRAFT: drafted with the help of AI and decided by the editors; not every verse has yet been signed.
 Sources: New Testament from the SBL Greek New Testament (SBLGNT, © SBL and Logos Bible Software, CC BY 4.0);
 Old Testament from the Leningrad Codex as tagged in STEPBible TAHOT (Tyndale House, Cambridge, CC BY 4.0).
-Files: tsb.json (Everyday), tsbl.json (Literal), tsbc.json (Conversational). Format: {"book_chapter":[{"n":verse,"t":text,"p":[[poetry line, indent]]?,"f":[footnotes]?}]}.
+Files: tsb.json (Everyday), tsbl.json (Literal), tsbc.json (Conversational); tsbes.json (Spanish, Everyday) and tsbvi.json (Vietnamese, Everyday), translated from the same sources under the English edition's decisions (10 November 2026). Format: {"book_chapter":[{"n":verse,"t":text,"p":[[poetry line, indent]]?,"f":[footnotes]?}]}.
 Footnotes ("f") are © 2026 Phrontis Holdings LLC, all rights reserved; they are not covered by the CC BY licence above.
 Version 2: the New Testament re-read against the SBLGNT, poetry lines, and textual footnotes.
